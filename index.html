@@ -5,16 +5,25 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./assets/css/style.css">
-    <style src="./assets/javascript/script.js" defer></style>
+    <script src="./assets/javascript/script.js" defer></script>
     <title>Code Quiz</title>
 </head>
 <body>
     <div id="main-wrapper">
         <header>
             <h1>JavaScript Code Quiz</h1>
+            <div id="timer"></div>
         </header>
-        <section>
-            quiz stuff here
+        <section id="questions">
+            <h2 class="questionTitle">Welcome to Matt's JavaScript quiz! There are 5 questions
+                and you will have 20 seconds to answer them all. Go ahead, enter your name and
+                press START to get started. Good Luck!
+            </h2>
+            <form id="name-form">
+                <label for="name">Enter Your Name:</label>
+                <input type="text" id="name" name="name"></ br>
+                <button id="startBtn" class="btn">START</button>
+            </form>
         </section>
         <footer>
             &copy;Matthew Jerich 2022

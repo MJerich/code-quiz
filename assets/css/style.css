@@ -2,7 +2,7 @@
     --dark-color: #2F4F4F;
     --light-color:#E6E6FA;
     --purple-color: #9400d3;
-    --light-purple: #B44DE0;
+    --light-purple: #b300ff;
 }
 
 * {
@@ -18,6 +18,7 @@ html,body{
 body {
     background-color: var(--dark-color);
     font-family: 'Courier New', Courier, monospace;
+    color: var(--light-color);
 }
 
 #main-wrapper {
@@ -29,10 +30,64 @@ body {
 }
 
 header {
-    font-size: 40px;
+    font-size: 25px;
     background-color: var(--purple-color);
     color: var(--light-color);
     width: 100%;
-    padding: 10px 0;
     text-align: center;
+}
+
+header h1 {
+    padding: 10px 0;
+}
+
+header div {
+    border-top: 2px solid black;
+    width: 100%;
+    background-color: var(--dark-color);
+    height: 50px;
+    padding-top: 7px;
+}
+
+#questions {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    gap: 10px;
+    text-align: center;
+    max-width: 600px;
+    padding: 0 6px;
+}
+
+input {
+    margin-bottom: 5px;
+}
+
+.btn {
+    background-color: var(--purple-color);
+    border: none;
+    color: var(--light-color);
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 8px;
+    border: 2px solid black;
+    font-family: 'Courier New', Courier, monospace;
+    width: 350px;
+    margin: 0 auto;
+}
+
+.btn:hover {
+    background-color: var(--light-purple);
+}
+
+footer {
+    background-color: var(--purple-color);
+    padding: 5px 0;
+    width: 100%;
+    text-align: center;
+    border-top: 2px solid black;
 }
