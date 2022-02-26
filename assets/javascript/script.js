@@ -1,11 +1,36 @@
 let nameFormEl = document.querySelector("#name-form");
-let saveData = {savedName: "", highScore: "0"};
+let saveData = {savedName: "", highScore: 0};
 const mainContentEl = document.querySelector("#questions");
 let correctAnswerEl = document.getElementsByClassName("correct");
 let questionCounter = 1
+let timeLeft = 20
+let timerEl = document.querySelector("#timer");
+let highScoreEl = document.querySelector("#high-score");
+let isFinished = false
+
+loadHighScore();
+
+timerEl.textContent = "TIMER: " + timeLeft;
+
+function loadHighScore() {
+    let saveData = localStorage.getItem("saveData")
+    saveData = JSON.parse(saveData)
+
+    if (saveData === null) {
+        saveData = {savedName: "", highScore: 0};
+        highScoreEl.textContent = "HIGH SCORE: " + saveData.highScore;
+        return
+    } else {
+        highScoreEl.textContent = "HIGH SCORE: " + saveData.highScore;
+        return
+    }
+}
 
 function startQuiz(event){
     event.preventDefault();
+
+    // start timer
+    timerCountdown();
 
     // save users name for high score
     let userNameEl = document.querySelector("input[name='name']").value;
@@ -25,7 +50,7 @@ function startQuiz(event){
 function firstQuestion() {
     // set variables for question and button strings
     const questionOne = "1. Inside which HTML element do we put the JavaScript?"
-    const oneAnswerOne = "<script>*"
+    const oneAnswerOne = "<script>"
     const oneAnswerTwo = "<js>"
     const oneAnswerThree = "<javascript>"
     const oneAnswerFour = "<scripting>"
@@ -34,7 +59,6 @@ function firstQuestion() {
     let answerThreeEl = null;
     let answerFourEl = null;
 
-
     // add the content the the html
     // create element for the question
     let questionOneEl = document.createElement("h2");
@@ -42,7 +66,6 @@ function firstQuestion() {
     mainContentEl.appendChild(questionOneEl);
 
     // create the buttons
-
     mainContentEl.appendChild(createButton(answerOneEl, oneAnswerOne, "correct"));
     mainContentEl.appendChild(createButton(answerTwoEl, oneAnswerTwo, "wrong"));
     mainContentEl.appendChild(createButton(answerThreeEl, oneAnswerThree, "wrong"));
@@ -55,7 +78,7 @@ function secondQuestion() {
         const twoAnswerOne = 'alertBox("Hello World");'
         const twoAnswerTwo = 'msg("Hello World");'
         const twoAnswerThree = 'msgBox("Hello World");'
-        const twoAnswerFour = 'alert("Hello World");*'
+        const twoAnswerFour = 'alert("Hello World");'
         let answerOneEl = null;
         let answerTwoEl = null;
         let answerThreeEl = null;
@@ -69,7 +92,6 @@ function secondQuestion() {
         mainContentEl.appendChild(questionOneEl);
     
         // create the buttons
-    
         mainContentEl.appendChild(createButton(answerOneEl, twoAnswerOne, "wrong"));
         mainContentEl.appendChild(createButton(answerTwoEl, twoAnswerTwo, "wrong"));
         mainContentEl.appendChild(createButton(answerThreeEl, twoAnswerThree, "wrong"));
@@ -82,7 +104,7 @@ function thirdQuestion() {
     const threeAnswerOne = 'function = myFunction()'
     const threeAnswerTwo = 'function myFunction()'
     const threeAnswerThree = 'let myFunction = function()'
-    const threeAnswerFour = 'Both B and C are acceptable*'
+    const threeAnswerFour = 'Both B and C are acceptable'
     let answerOneEl = null;
     let answerTwoEl = null;
     let answerThreeEl = null;
@@ -96,7 +118,6 @@ function thirdQuestion() {
     mainContentEl.appendChild(questionOneEl);
 
     // create the buttons
-
     mainContentEl.appendChild(createButton(answerOneEl, threeAnswerOne, "wrong"));
     mainContentEl.appendChild(createButton(answerTwoEl, threeAnswerTwo, "wrong"));
     mainContentEl.appendChild(createButton(answerThreeEl, threeAnswerThree, "wrong"));
@@ -107,7 +128,7 @@ function fourthQuestion() {
     // set variables for question and button strings
     const questionOne = '4. How do you call a function named "myFunction"?'
     const fourAnswerOne = 'call myFunction()'
-    const fourAnswerTwo = 'myFunction()*'
+    const fourAnswerTwo = 'myFunction()'
     const fourAnswerThree = 'call function myFunction()'
     const fourAnswerFour = 'function.myFunction()'
     let answerOneEl = null;
@@ -123,7 +144,6 @@ function fourthQuestion() {
     mainContentEl.appendChild(questionOneEl);
 
     // create the buttons
-
     mainContentEl.appendChild(createButton(answerOneEl, fourAnswerOne, "wrong"));
     mainContentEl.appendChild(createButton(answerTwoEl, fourAnswerTwo, "correct"));
     mainContentEl.appendChild(createButton(answerThreeEl, fourAnswerThree, "wrong"));
@@ -135,7 +155,7 @@ function fifthQuestion() {
     const questionOne = '5. How do you write an IF statement in JavaScript?'
     const fiveAnswerOne = 'if i = 0'
     const fiveAnswerTwo = 'if i == 5 then'
-    const fiveAnswerThree = 'if (i == 5)*'
+    const fiveAnswerThree = 'if (i == 5)'
     const fiveAnswerFour = 'if i = 5 then'
     let answerOneEl = null;
     let answerTwoEl = null;
@@ -150,7 +170,6 @@ function fifthQuestion() {
     mainContentEl.appendChild(questionOneEl);
 
     // create the buttons
-
     mainContentEl.appendChild(createButton(answerOneEl, fiveAnswerOne, "wrong"));
     mainContentEl.appendChild(createButton(answerTwoEl, fiveAnswerTwo, "wrong"));
     mainContentEl.appendChild(createButton(answerThreeEl, fiveAnswerThree, "correct"));
@@ -166,6 +185,10 @@ function finishedQuiz() {
     tryAgainBtn.textContent = "Try Again?"
     mainContentEl.appendChild(finishedHeaderEl);
     mainContentEl.appendChild(tryAgainBtn);
+    highScoreEl.textContent = "HIGH SCORE: " + saveData.highScore
+    localStorage.setItem("saveData", JSON.stringify(saveData))
+    return isFinished = true
+
 }
 
 function createButton(buttonName, buttonStr, answerState) {
@@ -211,6 +234,26 @@ function answerChecker(event) {
         location.reload();
     }
 };
+
+function timerCountdown() {
+    let timeInterval = setInterval(function() {
+        if (timeLeft > 0) {
+            timerEl.textContent = "TIMER: " + timeLeft;
+            timeLeft--;
+        } else {
+            timerEl.textContent = "TIMER: " + timeLeft;
+            clearInterval(timeInterval);
+            removeContent(mainContentEl);
+            finishedQuiz()
+            return
+        }
+        if (isFinished) {
+            clearInterval(timeInterval);
+            timeLeft = 0
+            timerEl.textContent = "TIMER: " + timeLeft;
+        }
+    },1000)
+}
 
 nameFormEl.addEventListener("submit", startQuiz);
 document.addEventListener("click", answerChecker);

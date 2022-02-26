@@ -41,12 +41,18 @@ header h1 {
     padding: 10px 0;
 }
 
-header div {
+#subheader {
     border-top: 2px solid black;
     width: 100%;
     background-color: var(--dark-color);
     height: 50px;
     padding-top: 7px;
+    display: flex;
+    justify-content: space-between;
+}
+
+#timer, #high-score {
+    padding: 0 15px;
 }
 
 #questions {
