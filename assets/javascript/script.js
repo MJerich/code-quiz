@@ -30,9 +30,6 @@ function loadHighScore() {
 function startQuiz(event){
     event.preventDefault();
 
-    // start timer
-    timerCountdown();
-
     // save users name for high score
     let userNameEl = document.querySelector("input[name='name']").value;
     saveData.savedName = userNameEl
@@ -49,6 +46,9 @@ function startQuiz(event){
 };
 
 function firstQuestion() {
+    // start timer
+    timerCountdown();
+    
     // set variables for question and button strings
     const questionOne = "1. Inside which HTML element do we put the JavaScript?"
     const oneAnswerOne = "<script>"
