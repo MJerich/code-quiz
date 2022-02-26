@@ -3,7 +3,7 @@ let saveData = {savedName: "", highScore: 0};
 const mainContentEl = document.querySelector("#questions");
 let correctAnswerEl = document.getElementsByClassName("correct");
 let questionCounter = 1
-let timeLeft = 20
+let timeLeft = 30
 let timerEl = document.querySelector("#timer");
 let highScoreEl = document.querySelector("#high-score");
 let isFinished = false
@@ -48,7 +48,7 @@ function startQuiz(event){
 function firstQuestion() {
     // start timer
     timerCountdown();
-    
+
     // set variables for question and button strings
     const questionOne = "1. Inside which HTML element do we put the JavaScript?"
     const oneAnswerOne = "<script>"
