@@ -7,7 +7,7 @@ let timeLeft = 20
 let timerEl = document.querySelector("#timer");
 let highScoreEl = document.querySelector("#high-score");
 let isFinished = false
-
+let oldHighScore = 0
 loadHighScore();
 
 timerEl.textContent = "TIMER: " + timeLeft;
@@ -18,10 +18,11 @@ function loadHighScore() {
 
     if (saveData === null) {
         saveData = {savedName: "", highScore: 0};
-        highScoreEl.textContent = "HIGH SCORE: " + saveData.highScore;
+        highScoreEl.textContent = "HIGH SCORE: " + saveData.savedName + " " + saveData.highScore;
         return
     } else {
-        highScoreEl.textContent = "HIGH SCORE: " + saveData.highScore;
+        highScoreEl.textContent = "HIGH SCORE: " + saveData.savedName + " " + saveData.highScore;
+        oldHighScore = saveData.highScore;
         return
     }
 }
@@ -185,8 +186,14 @@ function finishedQuiz() {
     tryAgainBtn.textContent = "Try Again?"
     mainContentEl.appendChild(finishedHeaderEl);
     mainContentEl.appendChild(tryAgainBtn);
-    highScoreEl.textContent = "HIGH SCORE: " + saveData.highScore
-    localStorage.setItem("saveData", JSON.stringify(saveData))
+    highScoreEl.textContent = "YOUR SCORE: " + saveData.savedName + " " + saveData.highScore
+
+    // if statement to make local starge save only if score got higher
+    if (saveData.highScore > oldHighScore) {
+        localStorage.setItem("saveData", JSON.stringify(saveData))
+    }
+
+    // localStorage.setItem("saveData", JSON.stringify(saveData))
     return isFinished = true
 
 }
@@ -228,6 +235,7 @@ function answerChecker(event) {
         removeContent(mainContentEl);
         questionCaller();
     } else if (element.classList.value === "wrong, btn") {
+        timeLeft = timeLeft - 2;
         removeContent(mainContentEl);
         questionCaller();
     } else if (element.classList.value === "try-again, btn") {
