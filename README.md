@@ -1,6 +1,6 @@
 # Web APIs Challenge: Code Quiz
 
-## This is the Third challenge for my MSU bootcamp.
+## This is the Fourth challenge for my MSU bootcamp.
 
 I had to create a quiz on the fundamentals of JavaScript, with the following criteria:
 ```
